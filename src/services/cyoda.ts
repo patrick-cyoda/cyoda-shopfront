@@ -84,13 +84,21 @@ export const getCyodaClient = (): CyodaClient => {
     const baseURL = import.meta.env.VITE_CYODA_API_BASE;
     const token = import.meta.env.VITE_CYODA_TOKEN;
 
+    // Debug environment variables
+    console.log('🔍 Cyoda Environment Check:');
+    console.log('VITE_CYODA_API_BASE:', baseURL);
+    console.log('VITE_CYODA_TOKEN present:', !!token);
+    console.log('VITE_CYODA_TOKEN length:', token?.length || 0);
+
     if (!baseURL) {
       throw new Error('VITE_CYODA_API_BASE must be set in environment variables');
     }
 
     if (!token) {
-      console.warn('VITE_CYODA_TOKEN not set - API calls may fail. Check your .env file.');
+      console.warn('❌ VITE_CYODA_TOKEN not set - API calls may fail. Check your .env file.');
       // Create client anyway for development with mock data
+    } else {
+      console.log('✅ Cyoda client configured successfully');
     }
 
     cyodaClient = new CyodaClient({ 

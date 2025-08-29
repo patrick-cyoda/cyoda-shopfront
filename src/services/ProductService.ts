@@ -47,9 +47,13 @@ export class ProductService {
 
   async getAllProducts(): Promise<Product[]> {
     try {
-      return await this.client.getEntity<Product[]>('Product');
+      console.log('🚀 Attempting to fetch products from Cyoda API...');
+      const products = await this.client.getEntity<Product[]>('Product');
+      console.log('✅ Successfully fetched', products.length, 'products from API');
+      return products;
     } catch (error) {
-      console.warn('API unavailable, using mock data:', error);
+      console.warn('❌ API call failed, using mock data instead:', error);
+      console.log('📋 Mock data contains', (await getMockProducts()).length, 'products');
       return await getMockProducts();
     }
   }
